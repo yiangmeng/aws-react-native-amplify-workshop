@@ -1,5 +1,5 @@
-# AppSync
-AWS AppSync automatically updates the data in web and mobile applications in real time, and updates data for offline users as soon as they reconnect. AWS AppSync makes it easy to build collaborative mobile and web applications that deliver responsive, collaborative user experiences.
+# Lab 3: AppSync
+AWS AppSync automatically updates the data in web and mobile applications in real time and updates data for offline users as soon as they reconnect. AWS AppSync makes it easy to build collaborative mobile and web applications that deliver responsive, collaborative user experiences.
 
 ## Table of Contents
 
@@ -14,17 +14,18 @@ AWS AppSync automatically updates the data in web and mobile applications in rea
 amplify api add
 ```
 
-At this point, you will see either GraphQL or REST. In this lab, we will create the AWS AppSync by selecting GraphQL. 
+At this point, you will see either GraphQL or REST. In this lab, we will create the AWS AppSync by selecting GraphQL.
 ```
 ? Please select from one of the below mentioned services (Use arrow keys)
-❯ GraphQL 
-  REST 
+❯ GraphQL
+  REST
 ```
-
-Enter the API name: `jiojiome`
-
-At this point, choose `Amazon Cognito User Pool` as your autorization type for this API.
-
+```
+? Provide API name: ❯ GoGoApp
+```
+```
+? Provide API name: ❯ Amazon Cognito User Pool
+```
 
 Select 'N' as you do not have an anootated GraphQL schema yet.
 
@@ -35,7 +36,7 @@ Select 'Y' for guided schema creation and edit the schema now. You should see:
 ? Do you want a guided schema creation? true
 ? What best describes your project: (Use arrow keys)
 ? What best describes your project: Single object with fields (e.g., “Todo” with ID, name, description)
-? Do you want to edit the schema now? (Y/n) 
+? Do you want to edit the schema now? (Y/n)
 ? Do you want to edit the schema now? Yes
 Please manually edit the file created at /code/amplify/backend/api/jiojiome/schema.graphql
 ```
@@ -154,7 +155,7 @@ amplify push
 2. Once you have found your ClientId, you can now go to **AppSync Queries**.
 3. Click on **Login with User Pools** (Since you are using Cognito UserPool for API authorization, you will need to login as the Cognito user). Use the test user you set up in the previous lab.
 ![AWS AppSync Query Console - Login](images/appsync-console-queries-unable-parse-jwt.png)
-4. Key in your **ClientId**, **Username** and **Password**. Note: you can find your **ClientId** in your Cognito console OR `aws-export.js` file. 
+4. Key in your **ClientId**, **Username** and **Password**. Note: you can find your **ClientId** in your Cognito console OR `aws-export.js` file.
 5. Click **Login**. At this time, you are prompted to key in the new password for this account.
 ![AWS AppSync Console - Password Reset](images/appsync-console-password-reset.png)
 6. Now you can run your query, paste the following code into the query console:
@@ -187,11 +188,11 @@ First, let's add a new Lambda function in the AWS Console.
     - Role: Choose a new role
     - Role Name: lamba-cognito-dynamodb-execution
 4. Click "Create function" to proceed
-5. At the function code, copy/replace the [code](https://raw.githubusercontent.com/ykbryan/aws-amplify-sample-react-native-app/master/lambda/lambda-cognito-dynamodb-table-put.py) from `/code/lambda/lambda-cognito-dynamodb-table-put.py` 
+5. At the function code, copy/replace the [code](https://raw.githubusercontent.com/ykbryan/aws-amplify-sample-react-native-app/master/lambda/lambda-cognito-dynamodb-table-put.py) from `/code/lambda/lambda-cognito-dynamodb-table-put.py`
 6. Replace the name "YOUR-USER-TABLE" of the DynbamoDB table.
 7. At the top right corner, click "Save" to proceed.
 
-Now, that we have setup the Lambda function, we need to give the function the right IAM permission. 
+Now, that we have setup the Lambda function, we need to give the function the right IAM permission.
 
 1. Go to [AWS IAM Roles Console](https://console.aws.amazon.com/iam/home?region=ap-southeast-1#/roles)
 2. Search for `lamba-cognito-dynamodb-execution` and click on the Role name
@@ -219,4 +220,4 @@ Once you have your Lambda function ready, we can now attach this function as one
 4. At the *Post authentication* section, select your lambda function in the dropdown list
 5. Scroll down, select **Save changes** at the bottom of the page
 
-You are now set. Next, you can proceed to [Lab 4](../app) to run your React Native app on your mobile phone.
+You are now set. Next, you can proceed to [Lab 4](../app/README.md) to run your React Native app on your mobile phone.

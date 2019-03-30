@@ -1,5 +1,5 @@
-# Setup
-We will be using React-Native and [Expo](https://expo.io) to develop our mobile app. The React-Native application is pre-created for you (using `create-react-native-app` method). We will be using the Expo client on your mobile device to preview the app as we build it. Expo has two main components - the Expo development server and the mobile client. We will run a React Native and expo development server inside a docker container on [AWS Cloud9](https://aws.amazon.com/cloud9/). 
+# Lab 1: Setup
+We will be using React-Native and [Expo](https://expo.io) to develop our mobile app. The React-Native application is pre-created for you (using `create-react-native-app` method). We will be using the Expo client on your mobile device to preview the app as we build it. Expo has two main components - the Expo development server and the mobile client. We will run a React Native and expo development server inside a docker container on [AWS Cloud9](https://aws.amazon.com/cloud9/).
 
 <img src="../img/rn-expo.png" width="800">
 
@@ -21,7 +21,7 @@ We will be using React-Native and [Expo](https://expo.io) to develop our mobile 
 # Configure Cloud9
 ## Create Cloud9 environment
 
-1. Click the link [here](https://ap-southeast-1.console.aws.amazon.com/cloud9/home/product?region=ap-southeast-1) to go to Cloud9 console. Sign in with your credentials if necessary. You need to be in **Singapore** region for this lab. 
+1. Click the link [here](https://ap-southeast-1.console.aws.amazon.com/cloud9/home/product?region=ap-southeast-1) to go to Cloud9 console. Sign in with your credentials if necessary. You need to be in **Singapore** region for this lab.
 
 2. Click on **Create Environment**.
 ![AWS Cloud9 Create Environment](images/aws-cloud9-create.png)
@@ -39,7 +39,7 @@ We will be using React-Native and [Expo](https://expo.io) to develop our mobile 
 
 ## Update Preference
 
-We are going to create a new IAM user with the required access to the AWS resources. So, we do not need AWS Cloud9 to manage temporary credentials for us. 
+We are going to create a new IAM user with the required access to the AWS resources. So, we do not need AWS Cloud9 to manage temporary credentials for us.
 
 1. Go to the **Preference** via the top panel
 ![AWS Cloud9 Preference](images/aws-cloud9-preference.png)
@@ -128,7 +128,7 @@ WORKDIR /code
 
 RUN apt-get update && apt-get install -y python-dev screen
 
-RUN cd /tmp/ && git clone https://github.com/facebook/watchman.git && \ 
+RUN cd /tmp/ && git clone https://github.com/facebook/watchman.git && \
 cd watchman && git checkout v4.9.0 && ./autogen.sh && \
 ./configure && make -j4 && make install  && cd / && rm -rf /tmp/watchman
 
@@ -180,4 +180,4 @@ Follow the installation instructions for your mobile device on the [official Exp
 
 Create an Expo account via the [offical Expo website](https://expo.io/signup)
 
-Now you have successfully setup Expo and your AWS Cloud9 in your AWS Console. You can now proceed to [Lab 2](../amplify) to work on setting up the AWS Amplify CLI [TODO].
+Now you have successfully setup Expo and your AWS Cloud9 in your AWS Console. You can now proceed to [Lab 2](../amplify/README.md) to work on setting up the AWS Amplify CLI [TODO].

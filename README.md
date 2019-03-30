@@ -25,19 +25,19 @@ The data model will consist of:
 Our mobile application will be written in [React Native](https://facebook.github.io/react-native/). We will also be using [AWS Amplify](https://aws-amplify.github.io/amplify-js/index.html). AWS Amplify provides a declarative and make it really easy to add features like authentication and analytic to our mobile application. Our backend will be powered by AWS AppSnyc, a fully managed GraphQL service. AWS AppSync defines a GraphQL Schema with data types and GraphQL operations (query, mutation and subscription). It also associate a set of resolvers to Amazon DynamoDB, where we have 4 tables for our data models.
 
 
-## [Lab 1](setup/)
+## [Lab 1](setup/README.md)
 Setup AWS Cloud9, expo client and AWS environment.
 
-## [Lab 2](amplify/)
+## [Lab 2](amplify/README.md)
 Setup React Native development environment and AWS Amplify CLI in AWS Cloud9.
 
-## [Lab 3](appsync/)
+## [Lab 3](appsync/README.md)
 Setup AppSync & configure Cognito trigger in AWS console with AWS Lambda
 
-## [Lab 4](app/)
+## [Lab 4](app/README.md)
 Run your React Native App on your Mobile Device!
 
-## [Lab 5](cicd/) 
+## [Lab 5](cicd/README.md) 
 CI/CD for your React Native App
 
 

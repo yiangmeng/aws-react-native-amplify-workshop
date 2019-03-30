@@ -1,4 +1,4 @@
-# AWS Amplify
+# Lab 2: AWS Amplify
 
 AWS Amplify provides a declarative and easy-to-use interface across different categories of cloud operations. AWS Amplify goes well with any JavaScript based frontend workflow, and React Native for mobile developers.
 
@@ -204,4 +204,4 @@ Your Cognito User Pool has been setup with the default configurations via a Clou
 
 6. Check that your newly created user is in the users table with Enabled column set to **ENABLED** and the Account Status column set to **FORCE_CHANGE_PASSWORD**.
 
-You have successfully configured the AWS Mobile for your mobile app. Next, you can proceed to [Lab 2](../appsync/README.md) to work on setting up the AWS AppSync.
+You have successfully configured the AWS Mobile for your mobile app. Next, you can proceed to [Lab 3](../appsync/README.md) to work on setting up the AWS AppSync.
