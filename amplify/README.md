@@ -1,4 +1,4 @@
-# AWS Amplify
+# AWS Amplify + Cognito
 
 AWS Amplify provides a declarative and easy-to-use interface across different categories of cloud operations. AWS Amplify goes well with any JavaScript based frontend workflow, and React Native for mobile developers.
 
@@ -9,7 +9,7 @@ AWS Amplify provides a declarative and easy-to-use interface across different ca
 
 ## Initialise a development project
 
-We have prepared a sample app for you in this exercise. Simple `git clone` the repo `https://github.com/ykbryan/aws-amplify-sample-react-native-app` into another folder and copy the content to your `rn` folder on the following commands:
+We have prepared a sample app for you in this exercise. You can clone the repo into another folder and copy the content to your `rn` folder with the following commands:
 
 ```
 cd /code
@@ -18,62 +18,95 @@ mv app/* .
 rm -Rf app/
 ```
 
-Run this command inside the react-native docker environment. 
+Run this command inside the react-native docker environment.
 
 **IMPORTANT**: Ensure you are in the ```/code``` directory.
 ```
 amplify init
 ```
 
-Follow the commands in the following, take note that the `project's sourced directory` is ``.`` 
+Follow the commands in the following, take note that the `project's sourced directory` is ``.``
 ```
-Note: It is recommended to run this command from the root of your app directory
-? Choose your default editor: None
-? Choose the type of app that you're building javascript
-Please tell us about your project
-? What javascript framework are you using react-native
-? Source Directory Path:  /
-? Distribution Directory Path: /
-? Build Command:  npm run-script build
-? Start Command: npm run-script start
-Using default provider awscloudformation
+? Enter a name for the project (code) ❯ react-native-app
+```
+```
+? Enter a name for the environment ❯ dev
+```
+```
+? Choose your default editor: ❯ None
+```
 
-For more information on AWS Profiles, see:
-https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
-
+```
+? Choose the type of app that you're building ❯ javascript
+```
+```
+? What javascript framework are you using ❯ react-native
+```
+```
+? Source Directory Path: ❯ /
+```
+```
+? Distribution Directory Path: ❯ /
+```
+```
+? Build Command: ❯ npm run-script build
+```
+```
+? Start Command: ❯ npm run-script start
+```
+```
 Using default provider  awscloudformation
 AWS access credentials can not be found.
-? Setup new user Yes
-Follow these steps to set up access to your AWS account:
+? Setup new user ❯ Yes
 
+Follow these steps to set up access to your AWS account:
 Sign in to your AWS administrator account:
 https://console.aws.amazon.com/
 Press Enter to continue
+```
+At this stage, we will setup an AWS user for use in Amplify. Press Enter to proceed.
 
+```
 Specify the AWS Region
-? region:  ap-southeast-1
+? region: ❯ ap-southeast-1
+```
+```
 Specify the username of the new IAM user:
-? user name:  amplify-user
+? user name: ❯ amplify-user
+```
+```
 Complete the user creation using the AWS console
 https://console.aws.amazon.com/iam/home?region=undefined#/users$new?step=final&accessKey&userNames=amplify-user&permissionType=policies&policies=arn:aws:iam::aws:policy%2FAdministratorAccess
 Press Enter to continue
+```
+You will be prompted to open up the URL which will link you to an IAM console for the creation of the user.
 
+Proceed to create an IAM user with AdministratorAccess Permission attached.
+
+At the creation success page, you will see the Access Key ID and Secret Access Key. Copy them into the prompt and continue.
+
+```
 Enter the access key of the newly created user:
-? accessKeyId:  XXXXXX**********
-? secretAccessKey:  XXXXXXXXXXX********************
+? accessKeyId:  **********
+? secretAccessKey: ********************
+```
+```
 This would update/create the AWS Profile in your local machine
-? Profile Name:  default
+? Profile Name: ❯ default
 
 Successfully set up the new user.
 
 For more information on AWS Profiles, see:
 https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
-
-? Do you want to use an AWS profile? Yes
-? Please choose the profile you want to use. default
+```
+```
+? Do you want to use an AWS profile? ❯ Y
+```
+```
+? Please choose the profile you want to use. ❯ default
 ```
 
-Then you should see a bunch of `CREATE_IN_PROGRESS` commands running at the background for you. These are cloudformation templates that are automatically generated via the `init` command.
+Then you should see a bunch of `CREATE_IN_PROGRESS` commands running at the background for you. These are CloudFormation templates that are automatically generated via the `init` command.
 
 You should see this output:
 ```
@@ -90,10 +123,11 @@ Some next steps:
 Pro tip:
 Try "amplify add api" to create a backend API and then "amplify publish" to deploy everything
 ```
+Congratulations! You have successfully initialised Amplify for use in your environment. From here on, we will continue to use Amplify to help us quickly setup a simple authentication pool using Amazon Cognito.
 
-## Add Cognito user pool
+## Setup a Cognito user pool
 
-We need a way to authenticate the users of our app. We will use Amazon Cognito as our user directory. Setting it up is as simple as running the command below inside the react-native docker environment.
+We need a way to authenticate the users of our app. For this lab, we will use Amazon Cognito User Pool as our user directory. Setting it up is as simple as running the command below inside the react-native docker environment.
 ```
 amplify auth add
 ```
@@ -102,11 +136,11 @@ You should see:
 
 ```
 Using service: Cognito, provided by: awscloudformation
- The current configured provider is Amazon Cognito. 
+ The current configured provider is Amazon Cognito.
  Do you want to use the default authentication and security configuration? (Use arrow keys)
-❯ Yes, use the default configuration. 
-  No, I will set up my own configuration. 
-  I want to learn more. 
+❯ Yes, use the default configuration.
+  No, I will set up my own configuration.
+  I want to learn more.
 ```
 
 You can choose to setup your own configuration. At this point, let's choose the default configuration. Press `Enter`
@@ -139,7 +173,7 @@ At this point, you can see a table that shows the overall changes that are going
 | Category | Resource name   | Operation | Provider plugin   |
 | -------- | --------------- | --------- | ----------------- |
 | Auth     | cognito80421876 | Create    | awscloudformation |
-? Are you sure you want to continue? (Y/n) 
+? Are you sure you want to continue? (Y/n)
 ```
 
 Press `Y` and `Enter` to confirm. This will take a few minutes to run. Once done, you should see the following:
