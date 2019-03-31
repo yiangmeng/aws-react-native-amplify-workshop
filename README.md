@@ -6,7 +6,7 @@ This is a self-paced workshop designed for developers who want to build a React 
 
 ![Reference Architecture](img/reference-architecture.png)
 
-Our application allow users to create meetups and also to join existing meetups. Each meetup has also a chat feature to let users discuss about the event.
+Our application allows users to create meetups and also to join existing meetups. Each meetup has also a chat feature to let users discuss about the event.
 
 ### Screenshots
 
@@ -37,7 +37,7 @@ Setup AppSync & configure Cognito trigger in AWS console with AWS Lambda
 ## [Lab 4](app/README.md)
 Run your React Native App on your Mobile Device!
 
-## [Lab 5](cicd/README.md) 
+## [Lab 5](cicd/README.md)
 CI/CD for your React Native App
 
 

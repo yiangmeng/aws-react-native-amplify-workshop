@@ -1,14 +1,16 @@
 # Lab 2: AWS Amplify
 
+<img src="images/amplify.png" height="60">
+
 AWS Amplify provides a declarative and easy-to-use interface across different categories of cloud operations. AWS Amplify goes well with any JavaScript based frontend workflow, and React Native for mobile developers.
 
 In this project, we will show you how to use Amplify to quickly setup an authentication backend (via Cognito) and a GraphQL API endpoint (via AppSync).
 
-Note that Amplify is not an AWS Service, but an open source javascript framework.
+Note that Amplify is not an AWS Service, but an [open source javascript library](https://github.com/aws-amplify/amplify-js).
 
 ## Table of Contents:
 * [Initialise a development project](#initialise-a-development-project)
-* [Add Cognito user pool](#add-cognito-user-pool)
+* [Setup a Cognito user pool](#add-cognito-user-pool)
 * [Create a Cognito user](#create-a-cognito-user)
 
 ## Initialise a development project
@@ -89,6 +91,8 @@ Proceed to create an IAM user with AdministratorAccess Permission attached.
 
 At the creation success page, you will see the Access Key ID and Secret Access Key. Copy them into the prompt and continue.
 
+![AccessKeys](images/keys.png)
+
 ```
 Enter the access key of the newly created user:
 ? accessKeyId:  **********
@@ -110,7 +114,7 @@ https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
 ? Please choose the profile you want to use. ❯ default
 ```
 
-Then you should see a bunch of `CREATE_IN_PROGRESS` commands running at the background for you. These are CloudFormation templates that are automatically generated via the `init` command.
+Then you should see a bunch of `CREATE_IN_PROGRESS` commands running at the background for you. These are CloudFormation templates that are automatically generated via the `amplify init` command.
 
 You should see this output:
 ```
@@ -127,11 +131,18 @@ Some next steps:
 Pro tip:
 Try "amplify add api" to create a backend API and then "amplify publish" to deploy everything
 ```
-Congratulations! You have successfully initialised Amplify for use in your environment.
+Congratulations! You have successfully initialized Amplify for use in your environment.
 
 ## Setup a Cognito user pool
 
-We need a way to authenticate the users of our app. For this lab, we will use Amazon Cognito User Pool as our user directory. Setting it up is as simple as running the command below inside the react-native docker environment.
+We need a way to authenticate the users of our app. For this lab, we will use Amazon Cognito User Pool as our user directory. User pools are user directories that provide sign-up and sign-in options for your web and mobile app users.
+
+Your users can also sign in through social identity providers like Facebook, Google or Amazon, or through SAML identity providers (e.g. corporate ADFS).
+
+![User Pools](images/user-pools.png)
+
+Setting it up is as simple as running the command below inside the react-native docker environment.
+
 ```
 amplify auth add
 ```
@@ -159,7 +170,7 @@ Some next steps:
 "amplify publish" will build all your local backend and frontend resources (if you have hosting category added) and provision it in the cloud
 ```
 
-At this point, you can choose to re-configure your `Auth` again by entering the following command:
+At any point, you can choose to re-configure your `Auth` again by entering the following command:
 
 ```
 amplify auth update
@@ -204,4 +215,4 @@ Your Cognito User Pool has been setup with the default configurations via a Clou
 
 6. Check that your newly created user is in the users table with Enabled column set to **ENABLED** and the Account Status column set to **FORCE_CHANGE_PASSWORD**.
 
-You have successfully configured the AWS Mobile for your mobile app. Next, you can proceed to [Lab 3](../appsync/README.md) to work on setting up the AWS AppSync.
+You have successfully configured authentication via Cognito for your mobile app. Next, you can proceed to [Lab 3](../appsync/README.md) to work on setting up the GraphQL API via AWS AppSync.

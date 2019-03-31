@@ -26,22 +26,26 @@ At this point, you will see either GraphQL or REST. In this lab, we will create 
 ```
 ? Provide API name: ❯ Amazon Cognito User Pool
 ```
-
-Select 'N' as you do not have an anootated GraphQL schema yet.
-
-Select 'Y' for guided schema creation and edit the schema now. You should see:
-
 ```
-? Do you have an annotated GraphQL schema? No
-? Do you want a guided schema creation? true
+Use a Cognito user pool configured as a part of this project
+? Do you have an annotated GraphQL schema? (y/N) ❯ N
+```
+```
+? Do you want a guided schema creation? (Y/n) ❯ Y
+```
+```
 ? What best describes your project: (Use arrow keys)
-? What best describes your project: Single object with fields (e.g., “Todo” with ID, name, description)
-? Do you want to edit the schema now? (Y/n)
-? Do you want to edit the schema now? Yes
-Please manually edit the file created at /code/amplify/backend/api/jiojiome/schema.graphql
+❯ Single object with fields (e.g., “Todo” with ID, name, description)
+  One-to-many relationship (e.g., “Blogs” with “Posts” and “Comments”)
+  Objects with fine-grained access control (e.g., a project management app with owner-based authorization)
+  Single object with fields (e.g., “Todo” with ID, name, description)
+```
+```
+? Do you want to edit the schema now? (Y/n) ❯ Y
+Please manually edit the file created at /code/rn/amplify/backend/api/GoGoApp/schema.graphql
 ```
 
-Go to the schema file and start editing.
+In your folder structure on the left, follow the directory shown to find the schema file and double click on it to start start editing.
 
 ![Cloud9 GraphQL Schema](images/cloud9-graphql-schema.png)
 
@@ -81,7 +85,7 @@ type Follower @model {
 }
 ```
 
-Next, saved the file and go back to your Cloud9 terminal, Press `Enter` to continue. You should see the following messages:
+Next, save the file and go back to your Cloud9 terminal, Press `Enter` to continue. You should see the following messages:
 ```
 Successfully added resource test2 locally
 
@@ -101,13 +105,22 @@ You should see:
 | Category | Resource name   | Operation | Provider plugin   |
 | -------- | --------------- | --------- | ----------------- |
 | Auth     | cognito742b133c | No Change | awscloudformation |
-| Api      | jiojiome        | Create    | awscloudformation |
+| Api      | GoGoApp         | Create    | awscloudformation |
 ```
 
 Let's now push your changes to the AWS and it will take a few minutes to complete.
 
+What Amplify will do is that it will create the AppSync API with the API name you have provided, along with the set of role policies
+
 ```
 amplify push
+```
+
+```
+? Are you sure you want to continue? ❯ Y
+```
+```
+? Do you want to generate code for your newly created GraphQL API? ❯ N
 ```
 
 ## Edit your GraphQL Schema
@@ -127,7 +140,9 @@ type Event @model {
 }
 ```
 
-With Amplify CLI, you get a CRUD API with paging and filtering built-in; input types are created for each of the mutations and subscriptions are set up on each mutation; the backing store in a DynamoDB database. Now, let's back the data store with AWS ElasticSearch Service - this is good for basic searches and filtering, but you may want better searchability of your data. For example, you might want to do geo-lookups, or faceted search. For this sort of functionality, it would be a good idea to stream the data from DynamoDB to an ElasticSearch Service. To do that, add the @searchable directive to the type:
+With Amplify CLI, you get a CRUD API out of the box with paging and filtering built-in; input types are created for each of the mutations and subscriptions are set up on each mutation; with the backing data storage in a DynamoDB database.
+
+Now, let's back the data store with AWS ElasticSearch Service - this is good for basic searches and filtering, but you may want better searchability of your data. For example, you might want to do geo-lookups, or faceted search. For this sort of functionality, it would be a good idea to stream the data from DynamoDB to an ElasticSearch Service. To do that, add the @searchable directive to the type:
 
 ```
 type Event @model @searchable {

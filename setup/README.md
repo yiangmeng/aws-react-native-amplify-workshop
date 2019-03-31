@@ -37,20 +37,8 @@ We will be using React-Native and [Expo](https://expo.io) to develop our mobile 
 7. After a few minutes, when your environment is up, you should see following screen.
 ![AWS Cloud9](images/aws-cloud9.jpg)
 
-## Update Preference
-
-We are going to create a new IAM user with the required access to the AWS resources. So, we do not need AWS Cloud9 to manage temporary credentials for us.
-
-1. Go to the **Preference** via the top panel
-![AWS Cloud9 Preference](images/aws-cloud9-preference.png)
-
-2. At Preference, go to **AWS Setting**
-
-3. Disable **AWS managed temporary credentials**
-![AWS Cloud9 Preference](images/aws-cloud9-preference-credentials.png)
-
 ## Allocate storage
-Your Cloud9 instance is allocated 8 GB storage by default. We will increase this because we will be installing dependencies.
+Your Cloud9 instance is allocated 8 GB storage by default. We will increase this as we will be installing dependencies.
 
 1. Go to your running instances by clicking [here](https://ap-southeast-1.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-1#Instances:sort=desc:launchTime)
 
@@ -69,7 +57,7 @@ Your Cloud9 instance is allocated 8 GB storage by default. We will increase this
 6. Click on **Actions**, **Modify Volume**.
 ![AWS EC2 Modify Volume](images/aws-ec2-modify-volume.jpg)
 
-7. Change *8* to *120* and click on **Modify**.
+7. Change *8* to *50* and click on **Modify**.
 ![AWS EC2 Volume Modified](images/aws-ec2-volume-modified.jpg)
 
 8. Click on **Yes** and wait for the change to finish. It will take a couple of minutes.
@@ -88,10 +76,10 @@ AWS Cloud9 restricts inbound access to the IP addresses it uses to connect to th
 3. At the Security Group, click on **Inbound**, then Edit.
 ![AWS Security Group](images/aws-security-group.jpg)
 
-4. Click on **Add Rule**
+4. Click on **Add Rule**.
 ![AWS Add Security Group Rule](images/aws-add-security-group-rule.jpg)
 
-5. Key in `19000-19001`, and `0.0.0.0/0`, in respective fields
+5. Under **Port Range**, key in `19000-19001`. To the right under **Source**, select `Custom` and type in `0.0.0.0/0`.
 ![AWS Add New Rule](images/aws-add-new-rule.jpg)
 
 6. Click on **Save**.
@@ -100,11 +88,23 @@ AWS Cloud9 restricts inbound access to the IP addresses it uses to connect to th
 7. Double-check that the new inbound rules have been added
 ![AWS Security Group New Rule](images/aws-security-group-new-rule.jpg)
 
+## Update Preference
+
+We are going to create a new IAM user with the required access to the AWS resources. So, we do not need AWS Cloud9 to manage temporary credentials for us.
+
+1. Go to the **Preference** via the top panel
+![AWS Cloud9 Preference](images/aws-cloud9-preference.png)
+
+2. At Preference, go to **AWS Setting**
+
+3. Disable **AWS managed temporary credentials**
+![AWS Cloud9 Preference](images/aws-cloud9-preference-credentials.png)
+
 # Create React Native Docker Environment
 
-AWS Cloud9 environment comes pre-installed with Docker.
+In today's lab, we will be creating everything from within a Docker container. AWS Cloud9 environment comes pre-installed with Docker. Let's setup our environment.
 
-1. Go back to your Cloud9 environment
+1. Go back to your Cloud9 environment.
 ![AWS Cloud9](images/aws-cloud9.jpg)
 
 2. Let's create a working directory. We have chosen the name as **rn**. Type `mkdir rn` to create the directory. Press **Enter** key.
@@ -149,14 +149,17 @@ Note: find out what is your cloud UID by doing `echo $UID`. By default (at this 
 8. Go back to the lower window. Key in `docker build -t reactnative-expo .` and press **Enter** key. Notice this command ends with a dot.
 ![AWS Cloud9 Docker Command](images/aws-cloud9-docker-command.jpg)
 
-9. This will take *a few minutes*. You might see some `npm warnings` in red around optional dependencies. You can ignore them.
+9. This will take *a few minutes*. You might see some `npm warnings` in red around optional dependencies which you can ignore.
 ![AWS Cloud9 Docker Build](images/aws-cloud9-docker-build.jpg)
 
-10.	You can verify your image was successfully built by typing `docker images`. You should see a `reactnative-expo` image.
+*Protip: While waiting for the image to build, you may want to check out the [next section](#update-preference) to setup your Expo account in the meantime.*
+
+10.	You can verify that the Docker images were successfully built by typing `docker images`. You should see a `reactnative-expo` image.
 ![AWS Cloud9 Docker Images](images/aws-cloud9-docker-images.jpg)
 
 11. Start the React Native Docker using this image with the command below.
 This step allows us to use AWS Cloud9 to be the IDE for our React Native project under the directory ```~/environment/rn``` while having a Docker container execute the React Native and Expo development server. The 2 TCP ports (19000, 19001) allows our mobile device to communicate with the React Native/Expo container.
+
 ```
 cd ~/environment/rn
 
@@ -169,15 +172,22 @@ docker run -it --rm -p 19000:19000 -p 19001:19001 \
 
 ```
 
-Now that you are in the container, run `amplify --version` to double check that the amplify CLI has been properly installed in the docker container.
+12. Confirm that you are running inside the container's bash shell when you see that the user has changed to `ec2-user@8abc123def456:/code$ `.
 
-# Configure Expo
+13. Now that you are working from the `bash` in the container, run `amplify --version` to double check that the amplify CLI has been properly installed in the docker container.
+
+# Configure Expo <img src="images/expo.jpg" height="40">
+
+Expo is a toolchain built around React Native to help you quickly start an app. It provides a set of tools that simplify the development and testing of React Native app.
+
+We will be using Expo later on in Lab 4 to test out our app. Expo allows us to open projects during development without having to build and configure them from XCode or Android Studio.
+
 ## Install Expo mobile client
 
-Follow the installation instructions for your mobile device on the [official Expo website](https://docs.expo.io/versions/latest/introduction/installation#mobile-client-expo-for-ios-and-android)
+Follow the installation instructions for your mobile device on the [official Expo website](#configure-expo)
 
 ## Create Expo account
 
-Create an Expo account via the [offical Expo website](https://expo.io/signup)
+Create an Expo account via the [Offical Expo website](https://expo.io/signup).
 
-Now you have successfully setup Expo and your AWS Cloud9 in your AWS Console. You can now proceed to [Lab 2](../amplify/README.md) to work on setting up the AWS Amplify CLI [TODO].
+Now you have successfully setup Expo and your AWS Cloud9 in your AWS Console. You can now proceed to [Lab 2](../amplify/README.md) to work on setting up the AWS Amplify CLI.
