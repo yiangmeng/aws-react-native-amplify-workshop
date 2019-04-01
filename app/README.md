@@ -66,8 +66,20 @@ Follow following instructions to get this application to work on your phone.
 1. Point your camera at the QR code that appears on your Docker terminal
 ```
 
+:warning: Once you successfully launch the app, you will realise that the app will display some errors. **This is intended!** Right now, the app has some GraphQL codes that are **missing**. Challenge yourself to fix these codes in the section below.
+
 ## Bonus Exercise
-Notice that some part of the app might not be working. You are not complete the following in order to make this app work:
-1. Complete the graphql query events at `screen/home/Home.js`
-2. Complete the graphql mutation events at `screen/event/EventDetail.js`
-3. Complete the graphql subscription to get new messages at `screen/event/ChatRoom.js`
+
+Head over back to your Cloud9 console. Navigate to the React Native app source code located in `rn/src/screens/`. Follow the below tasks and find the file to complete the code. The sections will be indicated by `//TODO: ` within.
+
+**Task 1:** Complete the Graphql **query** events at `screens/home/Home.js`. Notice that `const AllEventsQuery` is returning empty string. Write in the graphql query to return the full list of Events to be listed in the Home screen.
+
+**Task 2:** Complete the graphql **mutation** events at `screens/event/EventDetail.js`.
+
+**Task 3** Complete the graphql **subscription** to get new messages at `screens/event/ChatRoom.js`.
+
+:balloon: **Protips:**
+  - You might want to refer to the [Schema diagram in Lab 3](../appsync/README.md) to help you with the fields for writing the query.
+  - Look at the list of Query, Mutation and Subscription available from the [Schema](https://ap-southeast-1.console.aws.amazon.com/appsync/home) page.
+  - You can use the [Queries Simulator mentioned in Lab 3](../appsync/README.md) to test your queries as well. It prompts dropdown list of available actions when you start typing.
+  - If you sniff around the codes in `screens/`, you will be able to find some sample codes on how a query, mutation is performed.
