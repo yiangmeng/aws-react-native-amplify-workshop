@@ -10,7 +10,24 @@
 
 ## Setup & Run The React Native App
 
-Make sure you are **inside React Native Docker** environment, you can now run the following command:
+Make sure you are **inside React Native Docker** environment. You can do a quick check in your Cloud9 console that you are running in the Docker `bash` by checking that your username is `ec2-user`:
+
+![Ec2-User](images/ec2user.png)
+
+If not, run the `bash` command again:
+```
+cd ~/environment/rn
+
+docker run -it --rm -p 19000:19000 -p 19001:19001 \
+-v "$PWD:/code" --user $UID \
+-v /home/ec2-user/.aws:/home/ec2-user/.aws \
+-v /home/ec2-user/.awsmobilejs:/home/ec2-user/.awsmobilejs \
+-e REACT_NATIVE_PACKAGER_HOSTNAME=`curl -s http://169.254.169.254/latest/meta-data/public-ipv4` \
+ reactnative-expo:latest bash
+
+```
+
+You can now run the following command:
 ```
 cd /code && yarn
 yarn start

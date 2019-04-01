@@ -45,7 +45,7 @@ Use a Cognito user pool configured as a part of this project
 Please manually edit the file created at /code/rn/amplify/backend/api/GoGoApp/schema.graphql
 ```
 
-In your folder structure on the left, follow the directory shown to find the schema file and double click on it to start start editing.
+In your folder structure on the left, follow the directory shown to find the schema file and double click on it to start editing.
 
 ![Cloud9 GraphQL Schema](images/cloud9-graphql-schema.png)
 
@@ -84,6 +84,9 @@ type Follower @model {
   event: Event @connection(name: "EventFollowers")
 }
 ```
+
+At this point, you may want to take some time to study the schema with relevance to the functionality of the Chat/Event app that we are building. To help you with that, you can see that it corresponds to the following data representation:
+![Schema Representation](images/schema-representation.png)
 
 Next, save the file and go back to your Cloud9 terminal, Press `Enter` to continue. You should see the following messages:
 ```
@@ -193,19 +196,47 @@ Now you have successfully setup AppSync in your AWS environment. Let's configure
 
 ## Cognito User Pool Triggers
 
+
+
 First, let's add a new Lambda function in the AWS Console.
 
 1. Go to [AWS Lambda Console](https://ap-southeast-1.console.aws.amazon.com/lambda/home?region=ap-southeast-1#/functions)
 2. Click "Create function" button at the top right hand corner
 3. At the Create function, select "Author from scratch", put in the following details:
-    - Name: lambda-cognito-dynamodb-table-put
-    - Runtime: Python 3.6
-    - Role: Choose a new role
-    - Role Name: lamba-cognito-dynamodb-execution
-4. Click "Create function" to proceed
-5. At the function code, copy/replace the [code](https://raw.githubusercontent.com/ykbryan/aws-amplify-sample-react-native-app/master/lambda/lambda-cognito-dynamodb-table-put.py) from `/code/lambda/lambda-cognito-dynamodb-table-put.py`
-6. Replace the name "YOUR-USER-TABLE" of the DynbamoDB table.
-7. At the top right corner, click "Save" to proceed.
+    - **Name:** lambda-cognito-dynamodb-table-put
+    - **Runtime:** Python 3.7
+    - **Permissions:**
+      - Expand *Choose or create an execution role*
+        - **Execution Role:** Create a new role from AWS policy templates
+        - **Role Name:** lamba-cognito-dynamodb-execution
+        - **Policy Templates:** DynamoDB: Simple microservice permissions
+4. Click "Create function" to proceed. This step may take up to a few minutes.
+5. At the function code, replace the existing code with contents in `/code/lambda/lambda-cognito-dynamodb-table-put.py` from your Cloud9 directory  or from here:
+
+```Python
+import json
+import boto3
+
+dynamodb = boto3.resource('dynamodb').Table('YOUR-USER-TABLE')
+
+def lambda_handler(event, context):
+    print(event)
+    attributes = event["request"]["userAttributes"]
+
+    dynamodb.put_item(Item={
+        "id": attributes["sub"],
+        "email": attributes["email"],
+        "phone_number": attributes["phone_number"],
+        "username": event["userName"]
+    })
+
+    # Return to Amazon Cognito
+    return event
+```
+6. Replace the name `"YOUR-USER-TABLE"` with your DynamoDB User table. To get the name of your DynamoDB Table, open up the DynamoDB console separately from [here](https://ap-southeast-1.console.aws.amazon.com/dynamodb/) (shift+click). On the left, click on Table. Look for the table that is named something like `User-abcdef12345boisdfsdafsaen6uk64-dev`. Copy this table name and replace it in `"YOUR-USER-TABLE"` in your Lambda script.
+![DynamoDB Table](images/dynamodb-table.png)
+
+7. Going back to your Lambda console, at the top right corner, click "Save" to proceed.
 
 Now, that we have setup the Lambda function, we need to give the function the right IAM permission.
 
@@ -217,6 +248,10 @@ Now, that we have setup the Lambda function, we need to give the function the ri
 6. Next, we will attach a permission for lambda to write to DynamoDB. Select **Add inline policy** to continue.
 ![AWS IAM Inline Policy Button](images/iam-inline-policy-button.png)
 7. Key in the details as shown below:
+  - **Service:** DynamoDB
+  - **Actions:** Expand **Write** and select **PutItem**
+  - **Resouces:** Specific - **Add ARN** and input DynamoDB ARN into the **Specify ARN for table** field. (refer to next screenshot)
+
 ![AWS IAM Detail](images/iam-inline-policy.png)
 Note that you can find your ARN for your dynamoDB table under DynamoDB console as shown below:
 ![AWS DynamoDB ARN](images/dynamodb-arn-name.png)
@@ -232,7 +267,7 @@ Once you have your Lambda function ready, we can now attach this function as one
 1. Go to the [AWS Cognito User Pool console](https://ap-southeast-1.console.aws.amazon.com/cognito/users)
 2. Select your user pool
 3. Go to triggers
-4. At the *Post authentication* section, select your lambda function in the dropdown list
+4. At the *Post authentication* section, select your lambda function `lambda-cognito-dynamodb-table-put` in the dropdown list
 5. Scroll down, select **Save changes** at the bottom of the page
 
 You are now set. Next, you can proceed to [Lab 4](../app/README.md) to run your React Native app on your mobile phone.
