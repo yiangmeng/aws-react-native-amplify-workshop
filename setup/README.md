@@ -57,13 +57,14 @@ Your Cloud9 instance is allocated 8 GB storage by default. We will increase this
 6. Click on **Actions**, **Modify Volume**.
 ![AWS EC2 Modify Volume](images/aws-ec2-modify-volume.jpg)
 
-7. Change *8* to *50* and click on **Modify**.
-![AWS EC2 Volume Modified](images/aws-ec2-volume-modified.jpg)
+7. Change *8* to *80* and click on **Modify**.
+![AWS EC2 Volume Modified](images/aws-ec2-volume-modified.png)
 
 8. Click on **Yes** and wait for the change to finish. It will take a couple of minutes.
-![AWS EBS Changed](images/aws-ebs-changed.jpg)
 
-9. Go back and select your instance. Reboot that instance to make sure the EBS changes take effect.
+9. Go back to the EC2 page and select your instance. Reboot that instance to make sure the EBS changes take effect.
+
+  ![Reboot](images/reboot.png)
 
 ## Configure security group
 AWS Cloud9 restricts inbound access to the IP addresses it uses to connect to the instance. In addition, we will need to allow traffic on `19000` and `19001`, both of which are used by Expo. The Expo server runs on port `19000` while the npm package manager is exposed on `19001`. Refer to the [Expo docs](https://docs.expo.io/versions/v29.0.0/guides/how-expo-works.html) to learn more.
