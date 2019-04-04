@@ -87,9 +87,9 @@ Press Enter to continue
 ```
 You will be prompted to open up the URL which will link you to an IAM console for the creation of the user.
 
-Proceed to create an IAM user with AdministratorAccess Permission attached.
+Proceed to create an IAM user with **AdministratorAccess** Permission attached.
 
-At the creation success page, you will see the Access Key ID and Secret Access Key. Copy them into the prompt and continue.
+At the creation success page, you will see the **Access Key ID** and **Secret Access Key**. Copy them into the prompt and continue.
 
 ![AccessKeys](images/keys.png)
 
@@ -158,22 +158,27 @@ Using service: Cognito, provided by: awscloudformation
   I want to learn more.
 ```
 
-You can choose to setup your own configuration. At this point, let's choose the default configuration. Press `Enter`
+You can choose to setup your own configuration. At this point, let's choose the **default configuration**. Press `Enter`
 
 You should see:
-
+```
+How do you want users to be able to sign in when using your Cognito User Pool? (Use arrow keys)
+❯ Username
+  Email
+  Phone Number
+  Email and Phone Number
+  I want to learn more.
+```
+You will see the default list of attributes that are required for signing up. Press **Enter**.
+```
+What attributes are required for signing up? <Enter>
+```
 ```
 Successfully added resource cognito80421876 locally
 
 Some next steps:
 "amplify push" will build all your local backend resources and provision it in the cloud
 "amplify publish" will build all your local backend and frontend resources (if you have hosting category added) and provision it in the cloud
-```
-
-At any point, you can choose to re-configure your `Auth` again by entering the following command:
-
-```
-amplify auth update
 ```
 
 We will now push the settings to your AWS account. This will create a Cognito User Pool automatically for you via CloudFormation.
